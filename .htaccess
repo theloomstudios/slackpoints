@@ -1,0 +1,26 @@
+RewriteEngine on
+RewriteBase /slackpoints/
+
+# ----------------------------------------
+# Force https
+# ----------------------------------------
+#RewriteCond %{HTTPS} !=on
+#RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ----------------------------------------
+# Add trailing slash
+# ----------------------------------------
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !(.*)/$
+RewriteRule ^(.*)$ $1/ [R=301,L]
+
+# ----------------------------------------
+# Disable rewrite for valid directory/files
+# ----------------------------------------
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+
+# ----------------------------------------
+# Endpoints
+# ----------------------------------------
+RewriteRule ^([a-z]+)/([a-z]+)/$ endpoints/$1.$2.php [L]
